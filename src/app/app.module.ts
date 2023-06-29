@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { PostNavigatorComponent } from './post-navigator/post-navigator.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PostNavigatorComponent } from './post-navigator/post-navigator.componen
     MatCardModule,
     MatListModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

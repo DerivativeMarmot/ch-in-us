@@ -1,7 +1,13 @@
-<div id="post-detail">
-    <h1 id="post-title"> {{postDetail?.title}} </h1>
-    <div id="post-time"> {{postDetail?.time}} </div>
-    <div id="post-body" [innerHTML]="postDetail?.body"></div>
-    <span id="footer"></span>
+<div id="detail-container">
+    <span id="top"></span>
+
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
     
+    <div id="post-detail">
+        <h1 id="post-title"> {{postDetail?.title}} </h1>
+        <div id="post-time"> {{postDetail?.time}} </div>
+        <div id="post-body" [innerHTML]="postDetail?.body"></div>
+        <span id="footer"></span>
+    </div>
+
 </div>

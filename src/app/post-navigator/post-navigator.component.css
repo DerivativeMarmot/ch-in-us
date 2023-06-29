@@ -43,3 +43,8 @@ li {
 #nav-container {
     margin-bottom: 100px;
 }
+
+mat-spinner {
+    margin-left: auto;
+    margin-right: auto;
+}

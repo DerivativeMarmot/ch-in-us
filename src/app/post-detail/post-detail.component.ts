@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, Renderer2 } from '@angular/core';
 import { PostDetailService } from '@/post-detail/post-detail.service';
 import { Post } from '@/post';
 import { PostDetail } from './post-detail';
@@ -13,9 +13,11 @@ export class PostDetailComponent {
   @Input() post_link?: string;
   detailString: string = '';
   postDetail?: PostDetail;
+  isLoading: boolean = false;
 
   constructor(
-    private postDetailSerivce: PostDetailService
+    private postDetailSerivce: PostDetailService,
+    private renderer: Renderer2
   ) {
   }
 
@@ -38,18 +40,28 @@ export class PostDetailComponent {
             time: time?.textContent || '',
             body: body?.innerHTML || ''
           }
+
+          this.isLoading = false;
+          this.scrollToTop();
         }
       );
     }
 
   }
 
+  scrollToTop() {
+    this.renderer.selectRootElement('#top')
+      .scrollIntoView({ behavior: 'smooth' });
+  }
+
   ngOnInit(): void {
+    this.scrollToTop();
 
   }
 
   // https://stackoverflow.com/questions/38571812/how-to-detect-when-an-input-value-changes-in-angular
   ngOnChanges(changes: SimpleChanges): void { // called when @Input changes
+    this.isLoading = true;
     this.getPostDetail();
   }
 

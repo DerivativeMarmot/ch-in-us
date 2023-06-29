@@ -1,5 +1,6 @@
 <div id="nav-container">
 
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
     <ul id="post-list">
         <li id="post" *ngFor="let post of slicedPosts" [class.selected]="post === selectedPost"
             (click)="onSelect(post)">
@@ -13,7 +14,7 @@
         </li>
     </ul>
 
-    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    <mat-paginator *ngIf="!isLoading" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
         (page)="OnPageChange($event)">
     </mat-paginator>
 </div>

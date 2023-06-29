@@ -16,6 +16,8 @@ export class PostNavigatorComponent {
   posts: Post[] = [];
   slicedPosts: Post[] = [];
   selectedPost?: Post;
+
+  isLoading: boolean = true;
   // @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   // init paginator
@@ -70,7 +72,9 @@ export class PostNavigatorComponent {
         this.slicedPosts = this.posts.slice(0, this.pageSize);
         // this.selectedPost = ;
         this.length = this.posts.length;
-        this.onSelect(this.slicedPosts[0])
+        this.onSelect(this.slicedPosts[0]);
+
+        this.isLoading = false;
       }
     );
   }
