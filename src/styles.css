@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    padding: 0;
+    margin: 0;
+    background-color: var(--color-background-canvas) !important;
+    /* position: relative; */
+    font-family: "PingFang SC","Lantinghei SC","Helvetica Neue","Microsoft Yahei","Hiragino Sans GB","Microsoft Sans Serif","WenQuanYi Micro Hei","sans";
+}
+
+:root {
+    --color-background-canvas: var(--warm-gray-20);
+    --warm-gray-20: #f3f2ef;
+}

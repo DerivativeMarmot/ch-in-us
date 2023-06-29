@@ -1,0 +1,12 @@
+<h1>forum</h1>
+
+<div id="forum-container">
+    <div id="left">
+
+        <app-post-navigator (postSelected)="onPostSelected($event)"></app-post-navigator>
+    </div>
+    <div id="right">
+
+        <app-post-detail [post_link]="selectedPost?.post_link"></app-post-detail>
+    </div>
+</div>

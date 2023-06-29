@@ -1,0 +1,19 @@
+<div id="nav-container">
+
+    <ul id="post-list">
+        <li id="post" *ngFor="let post of slicedPosts" [class.selected]="post === selectedPost"
+            (click)="onSelect(post)">
+
+            <div id="post-container">
+                <div id="post-title">{{ post.title }}</div>
+                <div id="post-author">{{ post.author }}</div>
+                <div id="post-time">{{ post.upload_time }}</div>
+            </div>
+            <mat-divider></mat-divider>
+        </li>
+    </ul>
+
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="OnPageChange($event)">
+    </mat-paginator>
+</div>
