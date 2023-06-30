@@ -1,10 +1,9 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
-  ViewChild, Injectable
+  Injectable
 } from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatPaginatorIntl } from '@angular/material/paginator';
@@ -29,7 +28,6 @@ export class MyCustomPaginatorIntl implements MatPaginatorIntl {
     if (length === 0) {
       return 'Page 1 of 1';
     }
-    // const amountPages = Math.ceil(length / pageSize);
     return `Page ${page + 1} of ${length}`;
   }
 }
@@ -41,72 +39,35 @@ export class MyCustomPaginatorIntl implements MatPaginatorIntl {
   providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }],
 })
 export class MatPaginatorGotoComponent {
-  // pageNumber: number = 1;
+
   pageSize: number = 1; // const 1
   pageIndex: number = 0;
   length: number = 0;
   goToPageNumber: number = 1;
-  // pageNumbers: number[] = [];
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  // @ViewChild(MatPaginator) paginator?: MatPaginator;
   @Input() disabled = false;
   @Input() hidePageSize = true;
-  // @Input() pageSizeOptions: number[] = [];
   @Input() showFirstLastButtons = true;
-  // @Output() page = new EventEmitter<PageEvent>();
-  // @Input("pageIndex") set pageIndexChanged(pageIndex: number) {
-  //   this.pageIndex = pageIndex;
-  // }
+
   @Input("length") set lengthChanged(length: number) {
     this.length = length;
   }
-  // @Input("pageSize") set pageSizeChanged(pageSize: number) {
-  //   this.pageSize = 1;
-  // }
 
   @Output() pageChanged = new EventEmitter<number>();
 
   constructor() { }
 
-  ngOnInit() {
-    // this.updateGoto();
-  }
-
-  // updateGoto() {
-  //   this.goTo = (this.pageIndex || 0) + 1;
-  //   this.pageNumbers = [];
-  //   for (let i = 1; i <= Math.ceil(this.length / this.pageSize); i++) {
-  //     this.pageNumbers.push(i);
-  //   }
-  // }
-
   onPageChanged(pageEvt: PageEvent) {
-    // this.length = pageEvt.length;
     this.pageIndex = pageEvt.pageIndex;
     this.goToPageNumber = this.pageIndex + 1;
-    // this.pageSize = 1;
-    // this.updateGoto();
-    // this.emitPageEvent(pageEvt);
     this.pageChanged.emit(pageEvt.pageIndex);
   }
 
   goToChange() {
-    if (this.paginator != null) {
-      this.pageIndex = this.goToPageNumber - 1;
-      // const event: PageEvent = {
-      //   length: this.length,
-      //   pageIndex: this.goToPageNumber-1,
-      //   pageSize: this.pageSize
-      // };
-      this.pageChanged.emit(this.pageIndex);
-      // this.page.emit(event);
-      // this.paginator.page.next(event);
-      // this.emitPageEvent(event);
-    }
+    this.pageIndex = this.goToPageNumber - 1;
+    this.pageChanged.emit(this.pageIndex);
   }
 
-  // emitPageEvent(pageEvent: PageEvent) {
-  //   this.page.next(pageEvent);
-  // }
 }
 

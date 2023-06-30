@@ -1,8 +1,6 @@
-import { Post } from '../post';
-import { ForumService } from '@/forum.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { PageEvent } from '@angular/material/paginator';
+import { Post } from './post';
+import { PostNavigatorService } from '@/post-navigator/post-navigator.service';
+import { Component } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -14,22 +12,15 @@ export class PostNavigatorComponent {
 
   @Output() postSelected = new EventEmitter<Post>();
   posts: Post[] = [];
-  slicedPosts: Post[] = [];
   selectedPost?: Post;
 
   isLoading: boolean = false;
-  // @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  // init paginator
   length: number = 0;
-  pageIndex: number = 0;
-  pageSize: number = 0; 
-  // pageSizeOptions: number[] = [10, 20, 30, 40];
-  pageEvent?: PageEvent;
 
 
   constructor(
-    private forumService: ForumService,
+    private postNavigatorService: PostNavigatorService,
   ) {
   }
 
@@ -39,19 +30,13 @@ export class PostNavigatorComponent {
   }
 
   onPageChanged(pageIndex: number) {
-    // this.pageIndex = pageIndex;
-    console.log(pageIndex);
     this.getPosts(pageIndex);
-    
-    // this.updateGoto();
-    // this.emitPageEvent(pageEvt);
-    
   }
 
   getPosts(index: number) {
     this.isLoading = true;
     this.posts = [];
-    this.forumService.getPostListHtml(String(index * 15)).subscribe(
+    this.postNavigatorService.getPostListHtml(String(index * 15)).subscribe(
       data => {
 
         const domParser = new DOMParser();
@@ -90,10 +75,7 @@ export class PostNavigatorComponent {
         });
 
         // init paginator
-        // this.slicedPosts = this.posts.slice(0, this.pageSize);
-        // this.pageSize = this.posts.length;
         this.length = Number(total_pages.textContent);
-        // console.log('from nav ', this.length);
         this.onSelect(this.posts[0]);
 
         this.isLoading = false;
@@ -101,21 +83,7 @@ export class PostNavigatorComponent {
     );
   }
 
-  // OnPageChange(event: PageEvent) {
-  //   // let startIndex = event.pageIndex * event.pageSize;
-  //   let startIndex = 0;
-  //   let endIndex = startIndex + this.pageSize;
-  //   if (endIndex > this.length) {
-  //     endIndex = this.length;
-  //   }
-  //   this.getPosts(event.pageIndex);
-  //   // this.slicedPosts = this.posts.slice(startIndex, endIndex);
-  //   this.onSelect(this.posts[0]);
-  // }
-
   ngOnInit(): void {
-
     this.getPosts(0);
-
   }
 }

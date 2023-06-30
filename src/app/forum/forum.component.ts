@@ -1,5 +1,5 @@
-import { Post } from '../post';
-import { Component} from '@angular/core';
+import { Post } from '../post-navigator/post';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-forum',

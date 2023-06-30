@@ -10,9 +10,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatButtonModule} from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { ForumComponent } from './forum/forum.component';
@@ -39,8 +39,10 @@ import { MatPaginatorGotoComponent } from './mat-paginator-goto/mat-paginator-go
     MatPaginatorModule,
     MatProgressSpinnerModule,
     FormsModule,
-    MatSelectModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

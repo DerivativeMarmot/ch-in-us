@@ -1,6 +1,6 @@
 import { Component, Input, SimpleChanges, Renderer2 } from '@angular/core';
 import { PostDetailService } from '@/post-detail/post-detail.service';
-import { Post } from '@/post';
+import { Post } from '@/post-navigator/post';
 import { PostDetail } from './post-detail';
 
 @Component({
