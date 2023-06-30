@@ -15,7 +15,6 @@ export class ForumService {
     })
   };
 
-  private postListUrl = 'https://cors-anywhere.marmot.ink/https://www.chineseinla.com/f/page_viewforum/f_29/start_30.html';
   // private postListUrl = 'https://cors-anywhere.marmot.ink/https://www.chineseinla.com/f/page_viewforum/f_29/topicdays_1/start_30.html';
   // private url = 'https://cors-anywhere.marmot.ink/https://www.chineseinla.com/f/page_viewforum/f_29/start_15.html';
   // private url = 'https://worldtimeapi.org/api/timezone/Europe/London';
@@ -24,8 +23,9 @@ export class ForumService {
     private http: HttpClient
   ) { }
 
-  getPostListHtml(): Observable<string> {
-    return this.http.get(this.postListUrl, { responseType: 'text' });
+  getPostListHtml(index: string): Observable<string> {
+    let postListUrl = `https://cors-anywhere.marmot.ink/https://www.chineseinla.com/f/page_viewforum/f_29/start_${index}.html`;
+    return this.http.get(postListUrl, { responseType: 'text' });
   }
 
   

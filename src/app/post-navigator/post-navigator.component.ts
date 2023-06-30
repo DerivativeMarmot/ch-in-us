@@ -17,13 +17,14 @@ export class PostNavigatorComponent {
   slicedPosts: Post[] = [];
   selectedPost?: Post;
 
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   // @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   // init paginator
   length: number = 0;
-  pageSize: number = 10;  //displaying three cards each row
-  pageSizeOptions: number[] = [10, 20, 30, 40];
+  pageIndex: number = 0;
+  pageSize: number = 0; 
+  // pageSizeOptions: number[] = [10, 20, 30, 40];
   pageEvent?: PageEvent;
 
 
@@ -37,12 +38,30 @@ export class PostNavigatorComponent {
     this.postSelected.emit(post); // acts as an event that invokes parent methods.
   }
 
-  getPosts() {
-    this.forumService.getPostListHtml().subscribe(
+  onPageChanged(pageIndex: number) {
+    // this.pageIndex = pageIndex;
+    console.log(pageIndex);
+    this.getPosts(pageIndex);
+    
+    // this.updateGoto();
+    // this.emitPageEvent(pageEvt);
+    
+  }
+
+  getPosts(index: number) {
+    this.isLoading = true;
+    this.posts = [];
+    this.forumService.getPostListHtml(String(index * 15)).subscribe(
       data => {
+
         const domParser = new DOMParser();
         const document = domParser.parseFromString(data, 'text/html');
 
+        // fetch total page
+        const post_pagination = document.querySelectorAll('.pagination_right > .page_index_link')
+        const total_pages = post_pagination[post_pagination.length - 1];
+        
+        // init post list
         const post_list = document.querySelector('#pageCenter > div.forum_left > form')
           ?.getElementsByClassName('forum_line')[2]
           .querySelectorAll(':scope > .topic_list_detail'); // :scope means only the direct children
@@ -69,29 +88,34 @@ export class PostNavigatorComponent {
             }
           }
         });
-        this.slicedPosts = this.posts.slice(0, this.pageSize);
-        // this.selectedPost = ;
-        this.length = this.posts.length;
-        this.onSelect(this.slicedPosts[0]);
+
+        // init paginator
+        // this.slicedPosts = this.posts.slice(0, this.pageSize);
+        // this.pageSize = this.posts.length;
+        this.length = Number(total_pages.textContent);
+        // console.log('from nav ', this.length);
+        this.onSelect(this.posts[0]);
 
         this.isLoading = false;
       }
     );
   }
 
-  OnPageChange(event: PageEvent) {
-    let startIndex = event.pageIndex * event.pageSize;
-    let endIndex = startIndex + event.pageSize;
-    if (endIndex > this.length) {
-      endIndex = this.length;
-    }
-    this.slicedPosts = this.posts.slice(startIndex, endIndex);
-    this.onSelect(this.slicedPosts[0])
-  }
+  // OnPageChange(event: PageEvent) {
+  //   // let startIndex = event.pageIndex * event.pageSize;
+  //   let startIndex = 0;
+  //   let endIndex = startIndex + this.pageSize;
+  //   if (endIndex > this.length) {
+  //     endIndex = this.length;
+  //   }
+  //   this.getPosts(event.pageIndex);
+  //   // this.slicedPosts = this.posts.slice(startIndex, endIndex);
+  //   this.onSelect(this.posts[0]);
+  // }
 
   ngOnInit(): void {
 
-    this.getPosts();
+    this.getPosts(0);
 
   }
 }

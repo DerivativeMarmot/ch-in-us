@@ -2,7 +2,7 @@
 
     <mat-spinner *ngIf="isLoading"></mat-spinner>
     <ul id="post-list">
-        <li id="post" *ngFor="let post of slicedPosts" [class.selected]="post === selectedPost"
+        <li id="post" *ngFor="let post of posts" [class.selected]="post === selectedPost"
             (click)="onSelect(post)">
 
             <div id="post-container">
@@ -14,7 +14,11 @@
         </li>
     </ul>
 
-    <mat-paginator *ngIf="!isLoading" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    <!-- <mat-paginator *ngIf="!isLoading" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
         (page)="OnPageChange($event)">
-    </mat-paginator>
+    </mat-paginator> -->
+    <!-- <app-mat-paginator-goto [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+		(page)="paginationChange($event)"></app-mat-paginator-goto> -->
+    <app-mat-paginator-goto [length]="length"
+		(pageChanged)="onPageChanged($event)"></app-mat-paginator-goto>
 </div>
